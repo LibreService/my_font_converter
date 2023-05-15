@@ -1,0 +1,36 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ecfbb83..d82507a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -78,8 +78,6 @@ add_library(woff2dec
+             src/woff2_dec.cc
+             src/woff2_out.cc)
+ target_link_libraries(woff2dec woff2common "${BROTLIDEC_LIBRARIES}")
+-add_executable(woff2_decompress src/woff2_decompress.cc)
+-target_link_libraries(woff2_decompress woff2dec)
+ 
+ # WOFF2 Encoder
+ add_library(woff2enc
+@@ -89,8 +87,6 @@ add_library(woff2enc
+             src/transform.cc
+             src/woff2_enc.cc)
+ target_link_libraries(woff2enc woff2common "${BROTLIENC_LIBRARIES}")
+-add_executable(woff2_compress src/woff2_compress.cc)
+-target_link_libraries(woff2_compress woff2enc)
+ 
+ # WOFF2 info
+ add_executable(woff2_info src/woff2_info.cc)
+@@ -260,13 +256,6 @@ generate_pkg_config ("${CMAKE_CURRENT_BINARY_DIR}/libwoff2enc.pc"
+   LIBRARIES woff2enc)
+ 
+ # Installation
+-if (NOT BUILD_SHARED_LIBS)
+-  install(
+-    TARGETS woff2_decompress woff2_compress woff2_info
+-    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-  )
+-endif()
+-
+ install(
+   TARGETS woff2common woff2dec woff2enc
+   ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"

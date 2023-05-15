@@ -1,0 +1,43 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2dc7232..0d4b482 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -181,17 +181,8 @@ if(BROTLI_PARENT_DIRECTORY)
+   set(BROTLI_LIBRARIES "${BROTLI_LIBRARIES}" PARENT_SCOPE)
+ endif()
+ 
+-# Build the brotli executable
+-add_executable(brotli ${BROTLI_CLI_C})
+-target_link_libraries(brotli ${BROTLI_LIBRARIES_STATIC})
+-
+ # Installation
+ if(NOT BROTLI_BUNDLED_MODE)
+-  install(
+-    TARGETS brotli
+-    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+-  )
+-
+   install(
+     TARGETS ${BROTLI_LIBRARIES_CORE}
+     ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+diff --git a/c/enc/encode.c b/c/enc/encode.c
+index 563c827..1c58fe4 100644
+--- a/c/enc/encode.c
++++ b/c/enc/encode.c
+@@ -38,6 +38,8 @@
+ extern "C" {
+ #endif
+ 
++extern void _progress (int percentage);
++
+ #define COPY_ARRAY(dst, src) memcpy(dst, src, sizeof(src));
+ 
+ typedef enum BrotliEncoderStreamState {
+@@ -1810,6 +1812,7 @@ BROTLI_BOOL BrotliEncoderCompressStream(
+         UpdateSizeHint(s, *available_in);
+         result = EncodeData(s, is_last, force_flush,
+             &s->available_out_, &s->next_out_);
++        _progress((int)((double)s->last_processed_pos_ / s->params.size_hint * 100));
+         if (!result) return BROTLI_FALSE;
+         if (force_flush) s->stream_state_ = BROTLI_STREAM_FLUSH_REQUESTED;
+         if (is_last) s->stream_state_ = BROTLI_STREAM_FINISHED;

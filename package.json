@@ -1,0 +1,56 @@
+{
+  "name": "@libreservice/my-font-converter",
+  "version": "0.1.0",
+  "files": [
+    "dist"
+  ],
+  "appName": "My Font Converter",
+  "homepage": "https://github.com/LibreService/my_font_converter",
+  "author": {
+    "name": "Qijia Liu",
+    "email": "liumeo@pku.edu.cn",
+    "url": "https://github.com/eagleoflqj"
+  },
+  "license": "AGPL-3.0-or-later",
+  "scripts": {
+    "worker": "rollup -c rollup.worker-config.mjs",
+    "lib": "bash scripts/build_lib.sh",
+    "wasm": "bash scripts/build_wasm.sh",
+    "dev": "vite --host",
+    "lint": "eslint --ext .ts,.js,.mjs,.vue src test",
+    "lint:fix": "eslint --ext .ts,.js,.mjs,.vue --fix src test",
+    "check": "vue-tsc --noEmit",
+    "build": "pnpm run check && rm -rf public/*.js.map && NODE_ENV=production pnpm run worker && vite build",
+    "test": "bash scripts/test.sh",
+    "preview": "vite preview --host"
+  },
+  "devDependencies": {
+    "@libreservice/my-widget": "^0.1.2",
+    "@libreservice/my-worker": "^0.4.0",
+    "@playwright/test": "^1.34.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-replace": "^5.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
+    "@vicons/fa": "^0.12.0",
+    "@vicons/material": "^0.12.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "client-zip": "^2.4.3",
+    "esbuild": "^0.17.19",
+    "eslint": "^8.41.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "^9.14.0",
+    "naive-ui": "^2.34.4",
+    "rollup": "^3.23.0",
+    "rollup-plugin-esbuild": "^5.0.0",
+    "typescript": "^5.0.4",
+    "vite": "^4.3.8",
+    "vite-plugin-pwa": "^0.15.0",
+    "vite-plugin-run": "^0.4.1",
+    "vue": "^3.3.4",
+    "vue-tsc": "^1.6.5"
+  }
+}
