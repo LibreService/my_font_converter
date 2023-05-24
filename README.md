@@ -12,7 +12,7 @@ All computation is performed in browser, thank to Web Assembly.
 It's also a [PWA](https://web.dev/progressive-web-apps/), so you can install it like a native App and use it **OFFLINE**.
 
 ## Self host
-Download latest [artifact](https://github.com/LibreService/my_rime/releases/download/latest/my-font-converter-dist.zip) built by GitHub Actions.
+Download latest [artifact](https://github.com/LibreService/my_font_converter/releases/download/latest/my-font-converter-dist.zip) built by GitHub Actions.
 
 ## Development workflow
 My Font Converter can be built on Linux and macOS.

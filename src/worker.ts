@@ -9,17 +9,22 @@ globalThis._ptr = globalThis._length = 0
 // @ts-ignore
 globalThis._progress = control('progress')
 
-expose({
-  ttfToWoff2 (ttf: ArrayBuffer): number {
-    const addr = Module._malloc(ttf.byteLength)
+function makeConverter (cFunc: (buffer: number, n: number) => number) {
+  return (buffer: ArrayBuffer): number => {
+    const addr = Module._malloc(buffer.byteLength)
     if (!addr) {
       throw new Error('OOM')
     }
-    writeArrayToMemory(new Uint8Array(ttf), addr)
-    _length = Module._ttf_to_woff2(addr, ttf.byteLength)
+    writeArrayToMemory(new Uint8Array(buffer), addr)
+    _length = cFunc(addr, buffer.byteLength)
     Module._free(addr)
     return _length
-  },
+  }
+}
+
+expose({
+  ttfToWoff2: makeConverter(Module._ttf_to_woff2),
+  woff2ToTtf: makeConverter(Module._woff2_to_ttf),
   getFile (content: ArrayBuffer) {
     if (!_ptr) {
       throw new Error('NPE')

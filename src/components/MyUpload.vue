@@ -3,13 +3,15 @@ import { computed, ref, watchEffect } from 'vue'
 import { NCard, NUpload, NUploadDragger, NIcon, NSpace, NButton, UploadFileInfo } from 'naive-ui'
 import { AttachFileFilled } from '@vicons/material'
 import { downloadZip } from 'client-zip'
-import { registerProgressCallback } from '../workerAPI'
 
 const props = defineProps<{
   title: string
   extension: string
   extensions: string[]
-  converter:(buffer: ArrayBuffer) => Promise<ArrayBuffer>
+  converter: {
+    registerProgressCallback: (callback: (percentage: number) => void) => void
+    convert: (buffer: ArrayBuffer) => Promise<ArrayBuffer>
+  }
 }>()
 
 function appendExtension (name: string) {
@@ -41,11 +43,11 @@ async function convert () {
   running.value = true
   for (const fileInfo of files.value) {
     fileInfo.status = 'uploading'
-    registerProgressCallback((percentage: number) => {
+    props.converter.registerProgressCallback((percentage: number) => {
       fileInfo.percentage = percentage
     })
     try {
-      const buffer = await props.converter(await fileInfo.file!.arrayBuffer())
+      const buffer = await props.converter.convert(await fileInfo.file!.arrayBuffer())
       if (buffer.byteLength === 0) {
         fileInfo.status = 'error'
       } else {

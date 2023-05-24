@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NSpace } from 'naive-ui'
 import MyUpload from '../components/MyUpload.vue'
-import { ttfToWoff2 } from '../workerAPI'
+import { ttfToWoff2, woff2ToTtf } from '../workerAPI'
 </script>
 
 <template>
@@ -14,6 +14,12 @@ import { ttfToWoff2 } from '../workerAPI'
       extension="woff2"
       :extensions="['ttf']"
       :converter="ttfToWoff2"
+    />
+    <my-upload
+      title="WOFF2 to TTF"
+      extension="ttf"
+      :extensions="['woff2']"
+      :converter="woff2ToTtf"
     />
   </n-space>
 </template>
