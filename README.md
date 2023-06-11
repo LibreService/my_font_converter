@@ -7,7 +7,7 @@ https://my-font-converter.vercel.app/
 
 This is a **STATIC** website so you **DON'T** need to own a server to host it.
 
-All computation is performed in browser, thank to Web Assembly.
+All computation is performed in browser, thanks to Web Assembly.
 
 It's also a [PWA](https://web.dev/progressive-web-apps/), so you can install it like a native App and use it **OFFLINE**.
 

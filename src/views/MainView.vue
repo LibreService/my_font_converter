@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { NSpace } from 'naive-ui'
-import MyUpload from '../components/MyUpload.vue'
+import { MyBulkConverter } from '@libreservice/my-widget'
 import { ttfToWoff2, woff2ToTtf } from '../workerAPI'
 </script>
 
@@ -9,16 +9,16 @@ import { ttfToWoff2, woff2ToTtf } from '../workerAPI'
     vertical
     class="my-column"
   >
-    <my-upload
+    <my-bulk-converter
       title="TTF to WOFF2"
-      extension="woff2"
       :extensions="['ttf']"
+      zip-name="woff2-fonts"
       :converter="ttfToWoff2"
     />
-    <my-upload
+    <my-bulk-converter
       title="WOFF2 to TTF"
-      extension="ttf"
       :extensions="['woff2']"
+      zip-name="ttf-fonts"
       :converter="woff2ToTtf"
     />
   </n-space>
